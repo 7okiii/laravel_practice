@@ -29,5 +29,6 @@ Route::middleware('auth')->group(function () {
 
 // 以下練習用コード
 Route::post('/save', [ProductController::class, 'create'])->name('product.create');
+Route::post('/dashboard/update', [ProductController::class, 'update']);
 
 require __DIR__.'/auth.php';
