@@ -14,7 +14,6 @@ class ProductController extends Controller
         $newProduct = new Product;
         $newProduct->product_name = $request->product_name;
         
-        // dd('dd');
         $request->validate([
             'product_name' => 'required'
         ]);

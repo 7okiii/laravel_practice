@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-5 sm:py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg border-2 border-gray-500">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -28,29 +28,29 @@
                     </form>
                 </div>
             </div>
-            <div class="bg-white overflow-hidden mt-10 shadow-sm sm:rounded-lg border-2 border-gray-500">
-                <div class="p-6 text-gray-900 w-full">
-                    <table class="table-auto w-full border-[1px] border-white">
-                        <tr class="bg-gradient-to-br from-gray-600 to-gray-800 h-10 border-[1px] border-gray-800 text-white drop-shadow-lg">
-                            <th>商品ID</th>
-                            <th>商品名</th>
-                            <th>編集</th>
-                            <th>削除</th>
+            <div class="bg-white overflow-hidden mt-5 sm:mt-10 shadow-sm sm:rounded-lg border-2 border-gray-500">
+                <div class="p-3 sm:p-6 text-gray-900 w-full">
+                    <table class="grid table-auto w-full border-[1px] border-white">
+                        <tr class="grid grid-cols-6 items-center bg-gradient-to-br from-gray-600 to-gray-800 h-10 border-[1px] border-gray-800 text-white drop-shadow-lg">
+                            <th class="col-span-3 sm:col-span-2">商品ID</th>
+                            <th class="col-span-3 sm:col-span-2">商品名</th>
+                            <th class="hidden sm:grid sm:col-span-1">編集</th>
+                            <th class="hidden sm:grid sm:col-span-1">削除</th>
                         </tr>
                         @foreach ($allProducts as $allProduct)
-                            <tr class="odd:bg-white even:bg-gray-100 border-[1px] border-gray-500" id="row_{{ $allProduct->id }}">
-                                <td class="text-center">
-                                    <input type="text" id="{{ $allProduct->id }}" value="{{ $allProduct->id }}" class="text-center bg-transparent outline-none border-none" readonly>
+                            <tr class="grid grid-cols-6 items-center odd:bg-white even:bg-gray-100 border-b-[1px] border-gray-500" id="row_{{ $allProduct->id }}">
+                                <td class="col-span-3 sm:col-span-2 text-center">
+                                    <input type="text" id="{{ $allProduct->id }}" value="{{ $allProduct->id }}" class="text-center w-full bg-transparent outline-none border-none rounded-sm" readonly>
                                 </td>
-                                <td class="text-center">
-                                    <input type="text" value="{{ $allProduct->product_name }}" id="product_name_{{ $allProduct->id }}" class="product_name text-center bg-transparent outline-none border-none rounded-sm" readonly>
+                                <td class="col-span-3 sm:col-span-2 text-center">
+                                    <input type="text" value="{{ $allProduct->product_name }}" id="product_name_{{ $allProduct->id }}" class="product_name w-full text-center bg-transparent outline-none border-none rounded-sm" readonly>
                                 </td>
-                                <td class="text-center">
+                                <td class="col-span-3 sm:col-span-1 text-center">
                                     {{-- <button class="showOkBtn px-3 py-1 bg-green-600 text-white font-medium my-2 rounded-sm" id="showOkBtn_{{ $allProduct->id }}">編集</button> --}}
                                     <button class="showOkBtn px-3 py-1 border-[1px] border-green-800 bg-gradient-to-tr from-green-500 to-green-600 shadow-md shadow-gray-300 text-white text-sm font-bold my-2 rounded-sm" id="showOkBtn_{{ $allProduct->id }}">編集</button>
                                     <button class="clickClass px-3 py-1 border-[1px] border-green-800 bg-gradient-to-tr from-green-500 to-green-600 shadow-md shadow-gray-300 text-white text-sm font-bold my-2 rounded-sm hidden" id="product_{{ $allProduct->id }}">OK</button>
                                 </td>
-                                <td class="text-center">
+                                <td class="col-span-3 sm:col-span-1 text-center">
                                     <button class="deleteBtn px-3 py-1 border-[1px] border-red-800 bg-gradient-to-tr from-red-500 to-red-600 shadow-md shadow-gray-300 text-white text-sm font-bold my-2 rounded-sm" id="deleteBtn_{{ $allProduct->id }}">削除</button>
                                 </td>
                             </tr>
