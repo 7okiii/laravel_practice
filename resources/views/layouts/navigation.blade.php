@@ -11,9 +11,19 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                    <x-nav-link :href="route('show')" :active="request()->routeIs('csv_upload_form')">
+                        {{ __('CSVインポート') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                    <x-nav-link :href="route('show.calendar')" :active="request()->routeIs('calendar')">
+                        {{ __('カレンダー') }}
                     </x-nav-link>
                 </div>
             </div>

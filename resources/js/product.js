@@ -19,10 +19,16 @@ $(".showOkBtn").click(function (e) {
 
     // 編集可能な場合のクラスの削除と追加
     inputElm.removeClass("border-none bg-transparent");
-    inputElm.addClass("border-[1px] border-sky-600 bg-gray-200");
+    inputElm.addClass("border-[1px] border-sky-600");
 });
 
-
+let inputValidation = {
+    rules:{
+        product_name:{
+            required:true
+        }
+    }
+}
 
 $(".clickClass").click(function (e) {
     // クリックしたボタンを取得
@@ -36,6 +42,8 @@ $(".clickClass").click(function (e) {
 
     // inputエレメントの値をidをもとに取得/splitを使用し数字だけを使用
     let product_name = $(`#product_name_${e.target.id.split("_")[1]}`).val();
+
+    // console.log(product_name.validate(inputValidation));
 
     if (product_name === "") {
         alert('商品名を入力してください');
@@ -115,9 +123,12 @@ $(".deleteBtn").click(function (e) {
         url: "/dashboard/delete",
 
         dataType: "html",
+
+        data: {
+            product_id: id.split("_")[1],
+        }
     })
         .done((res) => {
-            alert(`${product_name} を削除しました`);
             console.log("削除完了");
         })
         .fail((error) => {
