@@ -21,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [ProductController::class, 'showAllProduct'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,19 +29,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// 以下練習用コード
+// 商品登録
 Route::post('/save', [ProductController::class, 'create'])->name('product.create');
-Route::post('/dashboard/update', [ProductController::class, 'update']);
-Route::post('/dashboard/delete', [ProductController::class, 'delete']);
 
-// csvインポート
-Route::get('/get_csv', [CsvController::class, 'create']);
+// 商品名変更
+Route::post('/dashboard/update', [ProductController::class, 'update']);
+
+// 商品削除
+Route::post('/dashboard/delete', [ProductController::class, 'destroy']);
 
 // csv書き出し
-Route::get('/csv_upload_form', [CsvController::class, 'show'])->middleware(['auth', 'verified'])->name('show');
-Route::post('/csv_upload', [CsvController::class, 'store'])->middleware(['auth', 'verified'])->name('store');
+Route::get('/export_csv', [CsvController::class, 'export']);
 
-// カレンダー
-Route::get('/calendar', [CalendarController::class, 'show'])->name('show.calendar');
+// csvページ表示
+Route::get('/csv_upload_form', [CsvController::class, 'index'])->name('csv.index');
+
+// csvアップロード
+Route::post('/csv_upload', [CsvController::class, 'import'])->name('csv.import');
+
+// カレンダー表示
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+
+// 商品検索
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
 require __DIR__.'/auth.php';

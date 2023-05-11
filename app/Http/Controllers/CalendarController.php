@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 
 class CalendarController extends Controller
 {
-    public function show()
+    // 初期表示
+    public function index()
     {
         return view('calender');
     }

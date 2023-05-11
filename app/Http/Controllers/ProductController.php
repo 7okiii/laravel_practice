@@ -4,17 +4,36 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\MessageBag;
 
 class ProductController extends Controller
 {
+    // 初期表示
+    public function index(Request $request)
+    {
+        // セレクトボックスからのrequestがある場合、その値を入れる
+        if ($request->sort) {
+            $sort = $request->sort;
+        } else {
+            // セレクトボックスからのrequestがない場合、初期値に new を入れる
+            $sort = 'new';
+        }
+
+        if ($sort == 'new') {
+            // セレクトボックスの値が new の場合、商品を新しい順に並び替える
+            $allProducts = Product::orderBy('id', 'desc')->paginate(15);
+        } else {
+            // セレクトボックスの値が old の場合、商品を古い順に並び替える
+            $allProducts = Product::orderBy('id', 'asc')->paginate(15);
+        }
+
+        return view('dashboard', compact('allProducts', 'sort'));
+    }
+
+    // 新商品登録
     public function create(Request $request)
     {
-        $newProduct = new Product;
-
         // inputから入力値を受け取り$newProductに入れる
-        $newProduct->product_name = $request->product_name;
+        $newProduct = $request->product_name;
         
         // Laravelのバリデーションを使用しinput(product_name)を入力必須にする
         // バリデーションの結果は$errorsに自動で保管されるのでview側でどこでも使用できる
@@ -22,31 +41,22 @@ class ProductController extends Controller
             'product_name' => 'required'
         ]);
 
-        // dd($validatedData);
-
-        // saveメソッドでデータベースに入力値を保存
-        $newProduct->save();
+        Product::create([
+            'product_name' => $newProduct
+        ]);
 
         // 保存後データベースから全データを取得
-        $allProducts = DB::table('products')->get();
+        $allProducts = Product::all();
 
-        return redirect()->route('dashboard', ['allProducts' => $allProducts]);
+        return redirect()->route('dashboard.index', compact('allProducts'));
     }
 
-    public function showAllProduct()
-    {
-        // 件数が多いのでpaginateメソッドを利用して15件ずつ表示
-        $allProducts = DB::table('products')->paginate(15);
 
-        return view('dashboard', compact('allProducts'));
-    }
-
+    // 商品名変更＆保存
     public function update(Request $request)
     {
         // idが編集ボタンが持つIDと同じプロダクトを$productに代入
         $product = Product::find($request->product_id);
-
-        // dd($request->product_name);
 
         // 対象の商品名にajaxで送られてきたinputの値を代入
         $product->product_name = $request->product_name;
@@ -55,16 +65,33 @@ class ProductController extends Controller
         $product->save();
     }
 
-    public function delete(Request $request)
+
+    // 対象商品削除
+    public function destroy(Request $request)
     {
-        $product = new Product();
-        $product->destroy($request->product_id);
+        // destroyで該当のレコードを削除
+        Product::destroy($request->product_id);
+    }
 
-        // 削除後データベースから全データを取得
-        $allProducts = DB::table('products')->get();
+    // 商品検索
+    public function search(Request $request)
+    {
+        // inputから入力された値を受け取る
+        $keyword = $request->keyword;
         
-        // dd($allProducts);
+        // DBにある全商品データを取得
+        $allProducts = Product::all();
 
-        return redirect()->route('dashboard', ['allProducts' => $allProducts]);
+        // キーワードに入力がない場合は、全商品を返す
+        if($keyword == '') {
+            $results = Product::paginate(15);
+            return view('search_result', compact('results'));
+        } else {
+            // キーワードが入力された場合は、foreachで全商品の商品名とキーワードが部分的にでも一致するか確認し、一致すれば対象データを返す
+            foreach($allProducts as $product) {
+                $results = $product->where('product_name', 'LIKE', "%{$keyword}%")->paginate(15);
+            }
+            return view('search_result', compact('results'));
+        }
     }
 }

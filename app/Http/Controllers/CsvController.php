@@ -9,12 +9,15 @@ use SplFileObject;
 
 class CsvController extends Controller
 {
-    public function show()
+    // 初期表示
+    public function index()
     {
         return view('csv_upload');
     }
     
-    public function create()
+    
+    // csv出力
+    public function export()
     {
         // コールバックに一行ずつ書き込んでいく
         $callBack = function () {
@@ -60,7 +63,9 @@ class CsvController extends Controller
         return response()->streamDownload($callBack, $products_data, $header);
     }
 
-    public function store(Request $request)
+
+    // csv読み込み
+    public function import(Request $request)
     {
         // インポートされたファイルを取得
         $csv_data = $request->file('csvData');
@@ -74,17 +79,16 @@ class CsvController extends Controller
         // READ_CSVを使用してファイルの中身の行を読み込む
         $csv_file->setFlags(SplFileObject::READ_CSV);
 
+        $count = 1;
         foreach ($csv_file as $row) {
-            $count = 1;
-            // dd(mb_convert_encoding($row, 'UTF-8', 'SJIS'));
 
-            // 一行目はヘッダーなので飛ばす
+            // 一行目はヘッダーなので飛ばす（そのため上記の$count = 1 を指定）
             if ($count > 1) {
 
                 // もし行が空だったらスキップする
                 if ($row === [null]) continue; 
 
-                // $product_nameに行の配列の1つめ（商品名）の値をひとつづつ入れていく + 文字化け対策
+                // $product_nameに行の配列の1つめ（商品名）の値を入れる + 文字化け対策
                 $product_name = mb_convert_encoding($row[1], 'UTF-8', 'SJIS');
 
                 // 一行づづDBに追加していく

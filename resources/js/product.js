@@ -1,5 +1,9 @@
+// const { split } = require("postcss/lib/list");
+
+// 商品編集（input要素を入力可能にする処理）
 $(".showOkBtn").click(function (e) {
     // クリックしたボタンを取得
+    // split関数で_の後の部分（$allProduct_id）を付与
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
 
     // okボタンを取得
@@ -22,14 +26,8 @@ $(".showOkBtn").click(function (e) {
     inputElm.addClass("border-[1px] border-sky-600");
 });
 
-let inputValidation = {
-    rules:{
-        product_name:{
-            required:true
-        }
-    }
-}
 
+// 商品編集（input要素に入力して保存する処理）
 $(".clickClass").click(function (e) {
     // クリックしたボタンを取得
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
@@ -68,13 +66,8 @@ $(".clickClass").click(function (e) {
             },
         });
     
-        // idにクリックした変種ボタンのidを代入
+        // idにクリックした編集ボタンのidを代入
         let id = e.target.id;
-    
-        // // inputエレメントの値をidをもとに取得/splitを使用し数字だけを使用
-        // let product_name = $(`#product_name_${e.target.id.split("_")[1]}`).val();
-    
-        // console.log(product_name.validate(validation));
     
         $.ajax({
             // 通信方法指定
@@ -90,7 +83,6 @@ $(".clickClass").click(function (e) {
                 // クリックしたokボタンのidの数字だけ取得し代入
                 product_id: id.split("_")[1],
     
-                // 59行目で作った関数を代入
                 product_name: product_name,
             },
         })
@@ -104,9 +96,10 @@ $(".clickClass").click(function (e) {
                 console.log("エラー");
             });
     }
-
 });
 
+
+// 商品削除
 $(".deleteBtn").click(function (e) {
     // csr対策の設定
     $.ajaxSetup({
@@ -129,10 +122,17 @@ $(".deleteBtn").click(function (e) {
         }
     })
         .done((res) => {
-            console.log("削除完了");
+            // 削除完了後画面を更新
+            window.location.reload();
         })
         .fail((error) => {
             console.log(error);
-            console.log("エラーが発生しました");
+            console.log("エラー");
         });
 });
+
+// 商品並び替え
+// セレクトボックスの値が変更されるとsubmitされてrequestの値をProductControllerで受け取る
+$('#sort').change(function () {
+    $('#form').submit();
+})

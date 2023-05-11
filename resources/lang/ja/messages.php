@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'validation_error' => '入力必須項目です',
+    'register_error' => '商品名を入力してください。',
+    'search_error' => 'キーワードを入力してください。',
 ];
