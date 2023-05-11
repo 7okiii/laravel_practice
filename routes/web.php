@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CsvController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', [ProductController::class, 'showAllProduct'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [ProductController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,8 +29,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// 以下練習用コード
+// 商品登録
 Route::post('/save', [ProductController::class, 'create'])->name('product.create');
+
+// 商品名変更
 Route::post('/dashboard/update', [ProductController::class, 'update']);
+
+// 商品削除
+Route::post('/dashboard/delete', [ProductController::class, 'destroy']);
+
+// csv書き出し
+Route::get('/export_csv', [CsvController::class, 'export']);
+
+// csvページ表示
+Route::get('/csv_upload_form', [CsvController::class, 'index'])->name('csv.index');
+
+// csvアップロード
+Route::post('/csv_upload', [CsvController::class, 'import'])->name('csv.import');
+
+// カレンダー表示
+Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.index');
+
+// 商品検索
+Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
 require __DIR__.'/auth.php';

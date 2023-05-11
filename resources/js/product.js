@@ -1,5 +1,9 @@
+// const { split } = require("postcss/lib/list");
+
+// 商品編集（input要素を入力可能にする処理）
 $(".showOkBtn").click(function (e) {
     // クリックしたボタンを取得
+    // split関数で_の後の部分（$allProduct_id）を付与
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
 
     // okボタンを取得
@@ -19,20 +23,11 @@ $(".showOkBtn").click(function (e) {
 
     // 編集可能な場合のクラスの削除と追加
     inputElm.removeClass("border-none bg-transparent");
-    inputElm.addClass("border-[1px] border-sky-600 bg-gray-200");
+    inputElm.addClass("border-[1px] border-sky-600");
 });
 
 
-// バリデーション
-// let validation = {
-//     rules:{
-//         product_name:{
-//             require:true
-//         },
-//     }
-// }
-
-
+// 商品編集（input要素に入力して保存する処理）
 $(".clickClass").click(function (e) {
     // クリックしたボタンを取得
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
@@ -43,64 +38,68 @@ $(".clickClass").click(function (e) {
     // inputエレメントを取得
     let inputElm = $(`#product_name_${e.target.id.split("_")[1]}`);
 
-    // 保存終了後inputエレメントをreadonlyに設定
-    inputElm.attr("readonly", true);
-
-    // hiddenクラスを削除し編集ボタンの表示を戻す
-    clickedEditBtn.removeClass("hidden");
-
-    // 保存終了後okボタンの表示を消す
-    okBtn.addClass("hidden");
-
-    // 編集可能な場合のクラスの削除と追加
-    inputElm.removeClass("border border-white bg-gray-500");
-    inputElm.addClass("border-none bg-transparent");
-
-    // csr対策の設定
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-
-    // idにクリックした変種ボタンのidを代入
-    let id = e.target.id;
-
     // inputエレメントの値をidをもとに取得/splitを使用し数字だけを使用
     let product_name = $(`#product_name_${e.target.id.split("_")[1]}`).val();
 
-    // console.log(product_name.validate(validation));
+    // console.log(product_name.validate(inputValidation));
 
+    if (product_name === "") {
+        alert('商品名を入力してください');
+    } else {
+        // hiddenクラスを削除し編集ボタンの表示を戻す
+        clickedEditBtn.removeClass("hidden");
+    
+        // 保存終了後okボタンの表示を消す
+        okBtn.addClass("hidden");
 
-    $.ajax({
-        // 通信方法指定
-        method: "post",
-
-        // データ送信先
-        url: "/dashboard/update",
-        // processData: false,
-
-        // データタイプにhtmlを指定
-        dataType: "html",
-        data: {
-            // クリックしたokボタンのidの数字だけ取得し代入
-            product_id: id.split("_")[1],
-
-            // 59行目で作った関数を代入
-            product_name: product_name,
-        },
-    })
-        .done((res) => {
-            alert(`${product_name} を登録しました`);
-            console.log("登録完了");
-        })
-        //通信が失敗したとき
-        .fail((error) => {
-            console.log(error);
-            console.log("エラー");
+        // 保存終了後inputエレメントをreadonlyに設定
+        inputElm.attr("readonly", true);
+    
+        // 編集可能な場合のクラスの削除と追加
+        inputElm.removeClass("border border-white bg-gray-500");
+        inputElm.addClass("border-none bg-transparent");
+    
+        // csr対策の設定
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
         });
+    
+        // idにクリックした編集ボタンのidを代入
+        let id = e.target.id;
+    
+        $.ajax({
+            // 通信方法指定
+            method: "post",
+    
+            // データ送信先
+            url: "/dashboard/update",
+            // processData: false,
+    
+            // データタイプにhtmlを指定
+            dataType: "html",
+            data: {
+                // クリックしたokボタンのidの数字だけ取得し代入
+                product_id: id.split("_")[1],
+    
+                product_name: product_name,
+            },
+        })
+            .done((res) => {
+                alert(`${product_name} を登録しました`);
+                console.log("登録完了");
+            })
+            //通信が失敗したとき
+            .fail((error) => {
+                console.log(error);
+                console.log("エラー");
+            });
+    }
 });
 
+
+// 商品削除
 $(".deleteBtn").click(function (e) {
     // csr対策の設定
     $.ajaxSetup({
@@ -117,13 +116,23 @@ $(".deleteBtn").click(function (e) {
         url: "/dashboard/delete",
 
         dataType: "html",
+
+        data: {
+            product_id: id.split("_")[1],
+        }
     })
         .done((res) => {
-            alert(`${product_name} を削除しました`);
-            console.log("削除完了");
+            // 削除完了後画面を更新
+            window.location.reload();
         })
         .fail((error) => {
             console.log(error);
-            console.log("エラーが発生しました");
+            console.log("エラー");
         });
 });
+
+// 商品並び替え
+// セレクトボックスの値が変更されるとsubmitされてrequestの値をProductControllerで受け取る
+$('#sort').change(function () {
+    $('#form').submit();
+})
