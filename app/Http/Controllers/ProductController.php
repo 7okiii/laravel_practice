@@ -62,7 +62,7 @@ class ProductController extends Controller
         $product->product_name = $request->product_name;
 
         // 変更を保存
-        $product->save();
+        $product->update();
     }
 
 
@@ -80,18 +80,28 @@ class ProductController extends Controller
         $keyword = $request->keyword;
         
         // DBにある全商品データを取得
-        $allProducts = Product::all();
+        $allProducts = Product::query();
 
         // キーワードに入力がない場合は、全商品を返す
         if($keyword == '') {
             $results = Product::paginate(15);
             return view('search_result', compact('results'));
         } else {
-            // キーワードが入力された場合は、foreachで全商品の商品名とキーワードが部分的にでも一致するか確認し、一致すれば対象データを返す
-            foreach($allProducts as $product) {
-                $results = $product->where('product_name', 'LIKE', "%{$keyword}%")->paginate(15);
-            }
+            $results = $allProducts->where('product_name', 'LIKE', "%{$keyword}%")->paginate(15);
             return view('search_result', compact('results'));
         }
+    }
+
+    public function sort(Request $request) {
+        if ($request->sort == 'new') {
+
+            // セレクトボックスの値が new の場合、商品を新しい順に並び替える
+            $allProducts = Product::orderBy('id', 'desc')->paginate(15);
+        } else {
+            
+            // セレクトボックスの値が old の場合、商品を古い順に並び替える
+            $allProducts = Product::orderBy('id', 'asc')->paginate(15);
+        }
+        return view('dashboard', compact('allProducts'));
     }
 }

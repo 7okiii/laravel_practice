@@ -26,6 +26,11 @@
                         {{ __('カレンダー') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-5 sm:flex">
+                    <x-nav-link :href="route('post.index')" :active="request()->routeIs('post.index')">
+                        {{ __('投稿') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

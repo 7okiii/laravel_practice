@@ -1,5 +1,3 @@
-// const { split } = require("postcss/lib/list");
-
 // 商品編集（input要素を入力可能にする処理）
 $(".showOkBtn").click(function (e) {
     // クリックしたボタンを取得
@@ -59,7 +57,7 @@ $(".clickClass").click(function (e) {
         inputElm.removeClass("border border-white bg-gray-500");
         inputElm.addClass("border-none bg-transparent");
     
-        // csr対策の設定
+        // csrf対策の設定
         $.ajaxSetup({
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -101,7 +99,7 @@ $(".clickClass").click(function (e) {
 
 // 商品削除
 $(".deleteBtn").click(function (e) {
-    // csr対策の設定
+    // csrf対策の設定
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -136,3 +134,30 @@ $(".deleteBtn").click(function (e) {
 $('#sort').change(function () {
     $('#form').submit();
 })
+
+// 商品並び替え
+// $('#sort').change(function(e) {
+
+//     let sort = e.target.value;
+
+//     $.ajax({
+//         // 通信方法をgetに指定
+//         method: "GET",
+
+//         // データ送信先を指定
+//         url: "/dashboard/sort",
+
+//         // データタイプにhtmlを指定
+//         dataType: "html",
+
+//         data: {
+//             sort: sort,
+//         }
+//     })
+//         .done((res) => {
+//             console.log('並び替え完了');
+//         })
+//         .fail((error) => {
+//             console.log('エラー:',error);
+//         })
+// })

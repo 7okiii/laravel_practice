@@ -4,6 +4,7 @@ use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CsvController;
+use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,9 @@ Route::post('/dashboard/update', [ProductController::class, 'update']);
 // 商品削除
 Route::post('/dashboard/delete', [ProductController::class, 'destroy']);
 
+// 商品並び替え
+Route::get('/dashboard/sort', [ProductController::class, 'sort']);
+
 // csv書き出し
 Route::get('/export_csv', [CsvController::class, 'export']);
 
@@ -53,4 +57,9 @@ Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.in
 // 商品検索
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
+// 投稿ページ初期表示
+Route::get('/post', [PostController::class, 'index'])->name('post.index');
+
+// 投稿
+Route::post('/post/new', [PostController::class, 'create'])->name('post.create');
 require __DIR__.'/auth.php';

@@ -20,8 +20,8 @@
                 {{-- 商品並び替え用セレクトボックス --}}
                 <form id="form">
                     <select name="sort" id="sort" class="rounded-lg bg-white">
-                        <option value="new" {{ $sort == 'new' ? 'selected' : '' }}>新しい順</option>
-                        <option value="old" {{ $sort == 'old' ? 'selected' : '' }}>古い順</option>
+                        <option id="sort_new" value="new" {{ $sort == 'new' ? 'selected' : '' }}>新しい順</option>
+                        <option id="sort_old" value="old" {{ $sort == 'old' ? 'selected' : '' }}>古い順</option>
                     </select>
                 </form>
 
