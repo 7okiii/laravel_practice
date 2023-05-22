@@ -1,12 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('カレンダー') }}
         </h2>
     </x-slot>
     <div class="py-5">
         <div id="app">
-            <div class="m-auto w-4/5 p-5 bg-white rounded-lg border border-gray-500 shadow-md">
+            <div class="m-auto w-4/5 p-5 bg-white rounded-lg shadow-md">
                 <div id='calendar'></div>
             </div>
         </div>

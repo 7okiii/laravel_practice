@@ -135,29 +135,6 @@ $('#sort').change(function () {
     $('#form').submit();
 })
 
-// 商品並び替え
-// $('#sort').change(function(e) {
-
-//     let sort = e.target.value;
-
-//     $.ajax({
-//         // 通信方法をgetに指定
-//         method: "GET",
-
-//         // データ送信先を指定
-//         url: "/dashboard/sort",
-
-//         // データタイプにhtmlを指定
-//         dataType: "html",
-
-//         data: {
-//             sort: sort,
-//         }
-//     })
-//         .done((res) => {
-//             console.log('並び替え完了');
-//         })
-//         .fail((error) => {
-//             console.log('エラー:',error);
-//         })
-// })
+let quill = new Quill('#quill_editor', {
+    theme: 'snow'
+});

@@ -5,18 +5,27 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use SplFileObject;
+use Illuminate\Support\Facades\Log;
 
 
 class CsvController extends Controller
 {
-    // 初期表示
+    /**
+     * 初期表示
+     *
+     * @return void
+     */
     public function index()
     {
+        Log::debug('aaaa');
         return view('csv_upload');
     }
     
-    
-    // csv出力
+    /**
+     * csvエクスポート
+     *
+     * @return void
+     */
     public function export()
     {
         // コールバックに一行ずつ書き込んでいく
@@ -49,6 +58,8 @@ class CsvController extends Controller
             fclose($stream);
         };
 
+        Log::debug('callBack');
+
         // 保存するファイル名を指定
         $products_data = sprintf('全商品データ.csv', date('Ymd'));
 
@@ -64,7 +75,12 @@ class CsvController extends Controller
     }
 
 
-    // csv読み込み
+    /**
+     * csvインポート
+     *
+     * @param Request $request
+     * @return void
+     */
     public function import(Request $request)
     {
         // インポートされたファイルを取得

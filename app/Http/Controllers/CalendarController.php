@@ -9,6 +9,6 @@ class CalendarController extends Controller
     // 初期表示
     public function index()
     {
-        return view('calender');
+        return view('calendar');
     }
 }

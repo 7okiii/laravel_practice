@@ -23,8 +23,7 @@ return new class extends Migration
             $table->bigInteger('created_user_id')->nullable();
             $table->bigInteger('updated_user_id')->nullable();
             $table->timestamp('deleted_at')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
+            $table->timestamps();
         });
     }
 

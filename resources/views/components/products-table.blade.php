@@ -1,16 +1,17 @@
 <div class="bg-white overflow-hidden mt-1 shadow-md sm:rounded-lg">
     <div class="p-3 sm:p-6 text-gray-900 w-full">
         <table class="grid table-auto w-full border-[1px] border-white">
-            <tbody class="rounded-lg">
-
-                <tr class="grid grid-cols-6 bg-gradient-to-r from-gray-600 to-gray-800 text-white items-center h-10 border-[1px] border-gray-800 rounded-t-sm">
+            <thead>
+                <tr class="grid grid-cols-6 border-b border-cyan-600 items-center h-10 rounded-t-sm drop-shadow-lg">
                     <th class="col-span-3 sm:col-span-2">商品ID</th>
                     <th class="col-span-3 sm:col-span-2">商品名</th>
                     <th class="hidden sm:grid sm:col-span-1">編集</th>
                     <th class="hidden sm:grid sm:col-span-1">削除</th>
                 </tr>
+            </thead>
+            <tbody class="rounded-lg">
                 @foreach ($allProducts as $allProduct)
-                    <tr class="grid grid-cols-6 items-center odd:bg-white even:bg-gray-100 border-b-[1px] border-x-[1px] border-gray-500 last:rounded-b-sm" id="row_{{ $allProduct->id }}">
+                    <tr class="grid grid-cols-6 items-center border-b border-gray-300 last:rounded-b-sm" id="row_{{ $allProduct->id }}">
                         <td class="col-span-3 p-2 sm:col-span-2 text-center">
                             <input type="text" id="{{ $allProduct->id }}" value="{{ $allProduct->id }}" class="text-center w-full bg-transparent outline-none border-none rounded-lg" readonly>
                         </td>
@@ -26,8 +27,8 @@
                         </td>
                     </tr>
                 @endforeach
-            </table>
-        </tbody>
+            </tbody>
+        </table>
         <div class="mt-3">
             {{ $allProducts->links() }}
         </div>

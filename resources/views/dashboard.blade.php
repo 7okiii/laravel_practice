@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
     <div class="py-5 sm:py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
 
             <div class="flex justify-center items-center">
                 {{-- 商品登録 --}}

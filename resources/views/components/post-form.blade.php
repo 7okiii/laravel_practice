@@ -3,20 +3,19 @@
         <span class="text-lg font-semibold text-sky-600">新規投稿</span>
         <form method="POST" action="{{ route('post.create') }}">
             @csrf
-            <div class="flex flex-col mb-2">
+            <div class="flex flex-col mb-5">
                 <label for="">タイトル</label>
-                <input type="text" name="title" class="h-9 w-80 text-black rounded-lg">
+                <input type="text" name="title" class="h-9 w-80 text-black rounded-md">
             </div>
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->get('product_name') as $error)
-                            <li class="text-red-600">{{ __('messages.register_error') }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            <x-button class="px-7 py-2 bg-gradient-to-r from-cyan-600 to-sky-700">登録</x-button>
+            <div class="flex flex-col mb-2">
+                <label for="">内容</label>
+                <div id="quill_editor" class="h-60 mb-5"></div>
+            </div>
+            <div class="flex flex-col mb-5">
+                <label for="">画像</label>
+                <input type="file" name="upload_image">
+            </div>
+            <x-button class="px-7 py-2 bg-gradient-to-r from-cyan-600 to-sky-700">投稿</x-button>
         </form>
     </div>
 </div>

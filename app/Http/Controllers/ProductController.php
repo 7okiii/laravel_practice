@@ -20,10 +20,10 @@ class ProductController extends Controller
 
         if ($sort == 'new') {
             // セレクトボックスの値が new の場合、商品を新しい順に並び替える
-            $allProducts = Product::orderBy('id', 'desc')->paginate(15);
+            $allProducts = Product::orderBy('id', 'desc')->paginate(10);
         } else {
             // セレクトボックスの値が old の場合、商品を古い順に並び替える
-            $allProducts = Product::orderBy('id', 'asc')->paginate(15);
+            $allProducts = Product::orderBy('id', 'asc')->paginate(10);
         }
 
         return view('dashboard', compact('allProducts', 'sort'));
@@ -84,7 +84,7 @@ class ProductController extends Controller
 
         // キーワードに入力がない場合は、全商品を返す
         if($keyword == '') {
-            $results = Product::paginate(15);
+            $results = Product::paginate(10);
             return view('search_result', compact('results'));
         } else {
             $results = $allProducts->where('product_name', 'LIKE', "%{$keyword}%")->paginate(15);
@@ -96,11 +96,11 @@ class ProductController extends Controller
         if ($request->sort == 'new') {
 
             // セレクトボックスの値が new の場合、商品を新しい順に並び替える
-            $allProducts = Product::orderBy('id', 'desc')->paginate(15);
+            $allProducts = Product::orderBy('id', 'desc')->paginate(10);
         } else {
             
             // セレクトボックスの値が old の場合、商品を古い順に並び替える
-            $allProducts = Product::orderBy('id', 'asc')->paginate(15);
+            $allProducts = Product::orderBy('id', 'asc')->paginate(10);
         }
         return view('dashboard', compact('allProducts'));
     }
