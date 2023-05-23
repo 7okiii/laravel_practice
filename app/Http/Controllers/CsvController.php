@@ -17,7 +17,6 @@ class CsvController extends Controller
      */
     public function index()
     {
-        Log::debug('aaaa');
         return view('csv_upload');
     }
     
@@ -83,6 +82,14 @@ class CsvController extends Controller
      */
     public function import(Request $request)
     {
+        $validated = $request->validate(
+            [
+                'csvData' => 'required'
+            ],
+            [
+                'csvData.required' => 'ファイルを選択してください'
+            ]
+        );
         // インポートされたファイルを取得
         $csv_data = $request->file('csvData');
 
@@ -117,6 +124,6 @@ class CsvController extends Controller
             $count ++;
         }
 
-        return view('csv_upload');
+        return redirect()->route('dashboard.index')->with('completeMessage', 'CSVをインポートしました！');
     }
 }

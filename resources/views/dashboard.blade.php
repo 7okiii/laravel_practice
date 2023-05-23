@@ -1,10 +1,18 @@
+@if (session('completeMessage'))
+    <div class="w-full text-center text-white bg-green-500 py-4" id="flash_message">
+        {{ session('completeMessage') }}
+    </div>
+@endif
 <x-app-layout>
+    <x-slot:viteRef>
+        @vite(['resources/js/product.js'])
+    </x-slot:viteRef>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
     </x-slot>
-    <div class="py-5 sm:py-12">
+    <div>
         <div class="max-w-7xl mx-auto">
 
             <div class="flex justify-center items-center">

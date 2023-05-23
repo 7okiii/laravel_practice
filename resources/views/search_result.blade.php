@@ -1,7 +1,11 @@
 <x-app-layout>
-    <div class="py-5 sm:py-12">
+    <x-slot:viteRef>
+        @vite(['resources/js/product.js'])
+    </x-slot:viteRef>
+    <x-products-table :allProducts="$results"/>
+    {{-- <div>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <h2 class="text-2xl font-medium text-green-600">検索結果</h2>
+            <h2 class="text-2xl font-semibold text-white">検索結果</h2>
             <div class="bg-white overflow-hidden mt-1 shadow-md sm:rounded-lg">
                 <div class="p-3 sm:p-6 text-gray-900 w-full">
                     <table class="grid table-auto w-full border-[1px] border-white">
@@ -38,5 +42,5 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 </x-app-layout>

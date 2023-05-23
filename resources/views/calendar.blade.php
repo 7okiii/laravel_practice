@@ -4,7 +4,7 @@
             {{ __('カレンダー') }}
         </h2>
     </x-slot>
-    <div class="py-5">
+    <div>
         <div id="app">
             <div class="m-auto w-4/5 p-5 bg-white rounded-lg shadow-md">
                 <div id='calendar'></div>

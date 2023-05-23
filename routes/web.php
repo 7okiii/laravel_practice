@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 // 商品登録
 Route::post('/save', [ProductController::class, 'create'])->name('product.create');
 
-// 商品名変更
+// 商品名編集
 Route::post('/dashboard/update', [ProductController::class, 'update']);
 
 // 商品削除
@@ -57,9 +57,25 @@ Route::get('/calendar', [CalendarController::class, 'index'])->name('calendar.in
 // 商品検索
 Route::get('/search', [ProductController::class, 'search'])->name('product.search');
 
-// 投稿ページ初期表示
-Route::get('/post', [PostController::class, 'index'])->name('post.index');
+
 
 // 投稿
-Route::post('/post/new', [PostController::class, 'create'])->name('post.create');
+Route::prefix('post')->group(function () {
+    // 初期表示
+    Route::get('/', [PostController::class, 'index'])->name('post.index');
+
+    // 新規投稿
+    Route::post('/new', [PostController::class, 'create'])->name('post.create');
+
+    // 投稿編集初期表示
+    Route::get('/edit/{id}', [PostController::class, 'show'])->name('post.show');
+
+    // 投稿編集
+    Route::post('/edit', [PostController::class, 'update'])->name('post.update');
+
+    // 投稿削除
+    Route::get('/destroy/{id}', [PostController::class, 'destroy'])->name('post.destroy');
+});
+
+
 require __DIR__.'/auth.php';

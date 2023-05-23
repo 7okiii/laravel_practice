@@ -1,5 +1,5 @@
 // 商品編集（input要素を入力可能にする処理）
-$(".showOkBtn").click(function (e) {
+$(".showOkBtn").on( 'click', function (e) {
     // クリックしたボタンを取得
     // split関数で_の後の部分（$allProduct_id）を付与
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
@@ -26,7 +26,7 @@ $(".showOkBtn").click(function (e) {
 
 
 // 商品編集（input要素に入力して保存する処理）
-$(".clickClass").click(function (e) {
+$(".clickClass").on( 'click', function (e) {
     // クリックしたボタンを取得
     let clickedEditBtn = $(`#showOkBtn_${e.target.id.split("_")[1]}`);
 
@@ -98,7 +98,11 @@ $(".clickClass").click(function (e) {
 
 
 // 商品削除
-$(".deleteBtn").click(function (e) {
+$(".deleteBtn").on('click', function (e) {
+    if(!window.confirm('本当に削除しますか？')) {
+        window.alert('キャンセルされました');
+        return false;
+    }
     // csrf対策の設定
     $.ajaxSetup({
         headers: {
@@ -131,10 +135,10 @@ $(".deleteBtn").click(function (e) {
 
 // 商品並び替え
 // セレクトボックスの値が変更されるとsubmitされてrequestの値をProductControllerで受け取る
-$('#sort').change(function () {
+$('#sort').on('change', function () {
     $('#form').submit();
 })
 
-let quill = new Quill('#quill_editor', {
-    theme: 'snow'
-});
+window.setTimeout(() => {
+    $()
+})

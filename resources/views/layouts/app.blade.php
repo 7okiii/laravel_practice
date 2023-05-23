@@ -6,13 +6,11 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Naoki</title>
 
-        {{-- quill --}}
-        {{-- <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script> --}}
-        <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-        <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+        {{-- 全ページで利用するファイルの読み込み --}}
+        @vite(['resources/css/app.css', 'resources/sass/style.scss', 'resources/js/app.js'])
 
-        {{-- js/css読み込み --}}
-        @vite(['resources/css/app.css', 'resources/sass/style.scss', 'resources/js/app.js', '/resources/js/product.js'])
+        {{-- 各ページのjs読み込み --}}
+        {{ $viteRef ?? '' }}
     </head>
     <body class="font-sans antialiased">
         <div class="bg-main min-h-screen">
@@ -28,11 +26,11 @@
             @endif
 
             {{-- メイン --}}
-            <main class="px-3 sm:px-6 lg:px-8">
+            <main class="px-3 sm:px-6 lg:px-8 py-3 sm:py-10">
                 {{ $slot }}
             </main>
         </div>
-        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     </body>
 </html>

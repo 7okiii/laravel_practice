@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('is_display')->nullValue(false);
             $table->bigInteger('created_user_id')->nullable();
             $table->bigInteger('updated_user_id')->nullable();
-            $table->timestamp('deleted_at')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

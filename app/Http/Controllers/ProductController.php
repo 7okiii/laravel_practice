@@ -20,10 +20,10 @@ class ProductController extends Controller
 
         if ($sort == 'new') {
             // セレクトボックスの値が new の場合、商品を新しい順に並び替える
-            $allProducts = Product::orderBy('id', 'desc')->paginate(10);
+            $allProducts = Product::where('deleted_at', null)->orderBy('id', 'desc')->paginate(10);
         } else {
             // セレクトボックスの値が old の場合、商品を古い順に並び替える
-            $allProducts = Product::orderBy('id', 'asc')->paginate(10);
+            $allProducts = Product::where('deleted_at', null)->orderBy('id', 'asc')->paginate(10);
         }
 
         return view('dashboard', compact('allProducts', 'sort'));
@@ -39,6 +39,9 @@ class ProductController extends Controller
         // バリデーションの結果は$errorsに自動で保管されるのでview側でどこでも使用できる
         $request->validate([
             'product_name' => 'required'
+        ],
+        [
+            'product_name.required' => '商品名を入力してください'
         ]);
 
         Product::create([
@@ -63,6 +66,8 @@ class ProductController extends Controller
 
         // 変更を保存
         $product->update();
+
+        return redirect()->route('dashboard.index');
     }
 
 
@@ -70,7 +75,8 @@ class ProductController extends Controller
     public function destroy(Request $request)
     {
         // destroyで該当のレコードを削除
-        Product::destroy($request->product_id);
+        $product_id = (int)$request->product_id;
+        Product::destroy($product_id);
     }
 
     // 商品検索

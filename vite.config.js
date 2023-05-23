@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/sass/style.scss',
                 'resources/js/app.js',
+                'node_modules/quill/dist/quill.snow.css',
             ],
             refresh: true,
         }),

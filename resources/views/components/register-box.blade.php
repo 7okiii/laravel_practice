@@ -8,12 +8,8 @@
                 <input type="text" name="product_name" class="h-9 w-80 text-black rounded-lg">
             </div>
             @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->get('product_name') as $error)
-                            <li class="text-red-600">{{ __('messages.register_error') }}</li>
-                        @endforeach
-                    </ul>
+                <div>
+                    <span class="text-red-600">{{ $errors->first('product_name') }}</span>
                 </div>
             @endif
             <x-button class="px-7 py-2 bg-gradient-to-r from-cyan-600 to-sky-700">登録</x-button>
